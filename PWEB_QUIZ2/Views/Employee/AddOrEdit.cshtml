@@ -1,0 +1,58 @@
+﻿@model PWEB_QUIZ2.Models.Employee
+
+@{
+    Layout = null;
+}
+
+
+<form class="form-horizontal" action="/Employee/AddOrEdit/" enctype="multipart/form-data" id="employeeForm" role="form" autocomplete="off">
+
+    <div class="form-horizontal" style="padding:0px 20px;">
+        <input id="Emp_ID" name="Emp_ID" type="hidden" value="0">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { style="text-align:center; color:black;", @class = "control-label" })
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Position, htmlAttributes: new { style = "text-align:center; color:black;", @class = "control-label" })
+            @Html.EditorFor(model => model.Position, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Gender, htmlAttributes: new { style = "text-align:center; color:black;", @class = "control-label" })
+            @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Age, htmlAttributes: new { style = "text-align:center; color:black;", @class = "control-label" })
+            @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Salary, htmlAttributes: new { style = "text-align:center; color:black;", @class = "control-label" })
+            @Html.EditorFor(model => model.Salary, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Username, htmlAttributes: new { style = "text-align:center; color:black;", @class = "control-label" })
+            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.USER_PASSWORD, htmlAttributes: new { style = "text-align:center; color:black;", @class = "control-label" })
+            @Html.EditorFor(model => model.USER_PASSWORD, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.USER_PASSWORD, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</form>
