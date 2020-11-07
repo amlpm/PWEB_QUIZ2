@@ -3,6 +3,7 @@ using PWEB_QUIZ2.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -36,7 +37,7 @@ namespace PWEB_QUIZ2.Controllers
                     else
                     {
                         Session["Username"] = User.Identity.Name;
-                        return RedirectToAction("Home", "User");
+                        return RedirectToAction("Login", "Account");
                     }
                 }
             }
@@ -92,7 +93,44 @@ namespace PWEB_QUIZ2.Controllers
 
                 return View(model);
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Register(string ReturnUrl)
+        {
+            UserRole user = new UserRole();
+            return View(user);
+        }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Register(UserRole x, string ReturnUrl)
+        {
+            using (con)
+            {
+                Employee obj = new Employee();
+                obj.Name = x.Employee.Name;
+                obj.Position = x.Employee.Position;
+                obj.Gender = x.Employee.Gender;
+                obj.Age = x.Employee.Age;
+                obj.Salary = x.Employee.Salary;
+                obj.Username = x.Employee.Username;
+                obj.USER_PASSWORD = x.Employee.USER_PASSWORD;
+                obj.Status = "1";
+                con.Employees.Add(obj);
+                con.SaveChanges();
+                int roleIdInt = Convert.ToInt32(x.Role.Id);
+                UserRole usr = new UserRole();
+                usr.Emp_Id = obj.Emp_ID;
+                usr.RoleID = roleIdInt;
+                con.UserRoles.Add(usr);
+                con.SaveChanges();
+            }
+            ModelState.Clear();
+
+            ViewBag.SuccessMessage = "Registration Successful";
+            return RedirectToAction("Login", "Account");
+            //return View();
+        }
         public ActionResult RedirectToLocal(string ReturnUrl)
         {
             if (Url.IsLocalUrl(ReturnUrl))

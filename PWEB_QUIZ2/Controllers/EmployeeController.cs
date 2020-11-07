@@ -43,6 +43,7 @@ namespace PWEB_QUIZ2.Controllers
         {
             con.Configuration.ProxyCreationEnabled = false;
             string message = string.Empty;
+            
             if (ModelState.IsValid == true)
             {
                 var check = (from q in con.Employees
@@ -57,6 +58,7 @@ namespace PWEB_QUIZ2.Controllers
                     check.Age = model.Age;
                     check.Gender = model.Gender;
                     check.Salary = model.Salary;
+                    check.Status = model.Status;
 
                     con.Entry(check).State = EntityState.Modified;
                     con.SaveChanges();
@@ -88,8 +90,13 @@ namespace PWEB_QUIZ2.Controllers
                     {
                         Employee obj = new Employee();
                         obj = model;
-
+                        obj.Status = "1";
                         con.Employees.Add(obj);
+                        con.SaveChanges();
+                        UserRole usr = new UserRole();
+                        usr.Emp_Id = obj.Emp_ID;
+                        usr.RoleID = 2;
+                        con.UserRoles.Add(usr);
                         con.SaveChanges();
 
                         return Json(new
@@ -103,7 +110,7 @@ namespace PWEB_QUIZ2.Controllers
                 }
             }
             else
-                return Json(new { success = false, message = "Please fill all fields" },
+                return Json(new { success = false, message = "Please fill all fields"},
                 JsonRequestBehavior.AllowGet);
 
         }

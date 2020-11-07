@@ -1,0 +1,86 @@
+﻿@model PWEB_QUIZ2.Models.UserRole
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "RegisterForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Employee.Name, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Employee.Name, new { @class = "form-control", @placeholder = "Enter Name" })
+            @Html.ValidationMessageFor(x => x.Employee.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Employee.Position, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Employee.Position, new { @class = "form-control", @placeholder = "Enter Position" })
+            @Html.ValidationMessageFor(x => x.Employee.Position, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Employee.Gender, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Employee.Gender, new { @class = "form-control", @placeholder = "Enter Gender" })
+            @Html.ValidationMessageFor(x => x.Employee.Gender, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Employee.Age, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Employee.Age, new { @class = "form-control", @placeholder = "Enter Age" })
+            @Html.ValidationMessageFor(x => x.Employee.Age, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Employee.Salary, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Employee.Salary, new { @class = "form-control", @placeholder = "Enter Salary" })
+            @Html.ValidationMessageFor(x => x.Employee.Salary, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Employee.Username, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Employee.Username, new { @class = "form-control", @placeholder = "Enter Username" })
+            @Html.ValidationMessageFor(x => x.Employee.Username, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Employee.USER_PASSWORD, new { @class = "control-label" })
+            @Html.PasswordFor(x => x.Employee.USER_PASSWORD, new { @class = "form-control", @placeholder = "Enter Password" })
+            @Html.ValidationMessageFor(x => x.Employee.USER_PASSWORD, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Role.Id, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Role.Id, new { @class = "form-control", @placeholder = "Enter Role" })
+            @Html.ValidationMessageFor(x => x.Role.Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <input type="submit" class="btn btn-success" value="Register" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="form-group">
+                <label class="label-danger">@ViewBag.DuplicateMessage</label>
+            </div>
+        </div>
+    </div>
+}

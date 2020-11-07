@@ -11,9 +11,7 @@ namespace PWEB_QUIZ2.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class Employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,29 +21,15 @@ namespace PWEB_QUIZ2.Models
         }
     
         public int Emp_ID { get; set; }
-        [Required]
         public string Name { get; set; }
-        [Required]
         public string Position { get; set; }
-        [Required]
         public string Gender { get; set; }
-        [Required]
         public Nullable<int> Age { get; set; }
-        [Required]
         public Nullable<int> Salary { get; set; }
-        [Required]
         public string USER_PASSWORD { get; set; }
-        [Required]
         public string Username { get; set; }
         public string Status { get; set; }
-
-
-        [NotMapped]
-        [Required]
-        [System.ComponentModel.DataAnnotations.Compare("USER_PASSWORD")]
-        public string ConfirmPassword { get; set; }
-  
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRoles { get; set; }
     }
