@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -14,15 +15,24 @@ namespace PWEB_QUIZ2.Controllers
         Entities con = new Entities();
 
         // This method is used to fetch data from database.
-        public ActionResult GetEmp()
+        public ActionResult GetEmp(string empName = "",bool sort=false)
         {
             con.Configuration.ProxyCreationEnabled = false;
 
-            var getInfo = (from q in con.Employees
-                           select q).ToList();
-            if (getInfo.Count > 0)
+            var getInfo = from q in con.Employees
+                           select q;
+            if (empName != null && empName != "")
             {
-                return Json(new { success = true, getInfo },
+                getInfo = getInfo.Where(q => q.Name.Contains(empName));
+            }
+            if (sort)
+            {
+                getInfo = getInfo.OrderBy(q => q.Name);
+            }
+            var getInfoList = getInfo.ToList();
+            if (getInfoList.Count > 0)
+            {
+                return Json(new { success = true, getInfoList },
                 JsonRequestBehavior.AllowGet);
             }
             else

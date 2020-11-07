@@ -15,6 +15,13 @@
             </p>
         </div>
         <div class="panel-body">
+            <form>
+                <p>
+                    <input type="search" placeholder="Enter Employee Name" value="" id="empSearch" name="empSearch" style="width:500px;" />
+                    <input type="button" value="search" class="btn btn-primary" id="searchButton" />
+                    <input type="checkbox" value="sort" class="btn btn-primary" id="sortBox" />
+                </p>
+            </form>
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
@@ -68,19 +75,56 @@
                 success: function (data) {
                     $("#tblBody").empty();
 
-                    if (data.getInfo.length > 0) {
-                        for (var i = 0; i < data.getInfo.length; i++) {
+                    if (data.getInfoList.length > 0) {
+                        for (var i = 0; i < data.getInfoList.length; i++) {
                             $("#tblBody").append("<tr>" +
-                                "<td>" + data.getInfo[i].Name + "</td>" +
-                                "<td>" + data.getInfo[i].Position + "</td>" +
-                                "<td>" + data.getInfo[i].Gender + "</td>" +
-                                "<td>" + data.getInfo[i].Age + "</td>" +
-                                "<td>" + data.getInfo[i].Salary + "</td>" +
-                                "<td>" + data.getInfo[i].Username + "</td>" +
-                                "<td>" + data.getInfo[i].USER_PASSWORD + "</td>" +
+                                "<td>" + data.getInfoList[i].Name + "</td>" +
+                                "<td>" + data.getInfoList[i].Position + "</td>" +
+                                "<td>" + data.getInfoList[i].Gender + "</td>" +
+                                "<td>" + data.getInfoList[i].Age + "</td>" +
+                                "<td>" + data.getInfoList[i].Salary + "</td>" +
+                                "<td>" + data.getInfoList[i].Username + "</td>" +
+                                "<td>" + data.getInfoList[i].USER_PASSWORD + "</td>" +
                                 "<td>" +
-                                "<a href='#' onclick='getEmployeeById(" + data.getInfo[i].Emp_ID + ")' class='btn btn-success'>Edit</a>" +
-                                "<a onclick='DeleteEmployee(" + data.getInfo[i].Emp_ID + ")' href='#' class='btn btn-danger'>Delete</a>" +
+                                "<a href='#' onclick='getEmployeeById(" + data.getInfoList[i].Emp_ID + ")' class='btn btn-success'>Edit</a>" +
+                                "<a onclick='DeleteEmployee(" + data.getInfoList[i].Emp_ID + ")' href='#' class='btn btn-danger'>Delete</a>" +
+                                "</td>" +
+                                "</tr>");
+                        }
+                    }
+                },
+                error: function (er) {
+                    alert(er)
+                }
+            });
+        }
+
+        $("#searchButton").click(searchByName);
+        $("#sortBox").click(searchByName);
+        function searchByName() {
+            $.ajax({
+                type: "GET",
+                url: "/Employee/GetEmp",
+                data: {
+                    empName: document.getElementById("empSearch").value,
+                    sort: document.getElementById("sortBox").checked
+                },
+                success: function (data) {
+                    $("#tblBody").empty();
+
+                    if (data.getInfoList.length > 0) {
+                        for (var i = 0; i < data.getInfoList.length; i++) {
+                            $("#tblBody").append("<tr>" +
+                                "<td>" + data.getInfoList[i].Name + "</td>" +
+                                "<td>" + data.getInfoList[i].Position + "</td>" +
+                                "<td>" + data.getInfoList[i].Gender + "</td>" +
+                                "<td>" + data.getInfoList[i].Age + "</td>" +
+                                "<td>" + data.getInfoList[i].Salary + "</td>" +
+                                "<td>" + data.getInfoList[i].Username + "</td>" +
+                                "<td>" + data.getInfoList[i].USER_PASSWORD + "</td>" +
+                                "<td>" +
+                                "<a href='#' onclick='getEmployeeById(" + data.getInfoList[i].Emp_ID + ")' class='btn btn-success'>Edit</a>" +
+                                "<a onclick='DeleteEmployee(" + data.getInfoList[i].Emp_ID + ")' href='#' class='btn btn-danger'>Delete</a>" +
                                 "</td>" +
                                 "</tr>");
                         }
@@ -109,13 +153,17 @@
 
         $("#btnSaveEmp").click(function () {
             var oForm = document.forms["employeeForm"];
+            console.log(oForm)
             if ($("#employeeForm").valid()) {
                 var ajaxConfig = {
                     type: "POST",
                     url: oForm.action,
                     data: new FormData(oForm),
+                    processData: false,
+                    contentType: false,
                     success: function (data) {
                         if (data.success == true) {
+                            console.log("mashok");
                             if (data.Exceptions == "Exist") {
                                 $("#Username").val("").focus();
                                 alert(data.message);
