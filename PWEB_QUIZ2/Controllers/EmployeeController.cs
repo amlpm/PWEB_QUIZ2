@@ -15,7 +15,7 @@ namespace PWEB_QUIZ2.Controllers
         Entities con = new Entities();
 
         // This method is used to fetch data from database.
-        public ActionResult GetEmp(string empName = "",bool sort=false)
+        public ActionResult GetEmp(string empName = "",string sort="", string empPosition="", string empUsr = "")
         {
             con.Configuration.ProxyCreationEnabled = false;
 
@@ -25,10 +25,19 @@ namespace PWEB_QUIZ2.Controllers
             {
                 getInfo = getInfo.Where(q => q.Name.Contains(empName));
             }
-            if (sort)
+            if (empPosition != null && empPosition != "")
             {
-                getInfo = getInfo.OrderBy(q => q.Name);
+                getInfo = getInfo.Where(q => q.Position.Contains(empPosition));
             }
+            if (empUsr != null && empUsr != "")
+            {
+                getInfo = getInfo.Where(q => q.Username.Contains(empUsr));
+            }
+            if (sort=="Name"){ getInfo = getInfo.OrderBy(q => q.Name);}
+            else if (sort == "Position") { getInfo = getInfo.OrderBy(q => q.Position); }
+            else if (sort == "Gender") { getInfo = getInfo.OrderBy(q => q.Gender); }
+            else if(sort == "Age") { getInfo = getInfo.OrderBy(q => q.Age); }
+            else if(sort == "Salary") { getInfo = getInfo.OrderBy(q => q.Salary); }
             var getInfoList = getInfo.ToList();
             if (getInfoList.Count > 0)
             {

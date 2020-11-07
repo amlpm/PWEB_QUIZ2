@@ -17,9 +17,22 @@
         <div class="panel-body">
             <form>
                 <p>
-                    <input type="search" placeholder="Enter Employee Name" value="" id="empSearch" name="empSearch" style="width:500px;" />
+                    <input type="search" placeholder="Enter Employee Name" value="" id="empSearch" name="empSearch" style="width:400px;" />
                     <input type="button" value="search" class="btn btn-primary" id="searchButton" />
-                    <input type="checkbox" value="sort" class="btn btn-primary" id="sortBox" />
+                    <label for="sortBox">Sort By:</label>
+                    <select name="sortBy" id="sortBox">
+                        <option value="">Select</option>
+                        <option value="Name">Name</option>
+                        <option value="Position">Position</option>
+                        <option value="Gender">Gender</option>
+                        <option value="Age">Age</option>
+                        <option value="Salary">Salary</option>
+                    </select>
+                    <br /><br />
+                    <input type="search" placeholder="Enter Position" value="" id="empSearchPos" name="empSearchPos" style="width:400px;" />
+                    <input type="button" value="search" class="btn btn-primary" id="searchPosButton" />
+                    <input type="search" placeholder="Enter Username" value="" id="empSearchUsr" name="empSearchUsr" style="width:400px;" />
+                    <input type="button" value="search" class="btn btn-primary" id="searchUsrButton" />
                 </p>
             </form>
             <table class="table table-bordered table-hover">
@@ -100,6 +113,8 @@
         }
 
         $("#searchButton").click(searchByName);
+        $("#searchPosButton").click(searchByName);
+        $("#searchUsrButton").click(searchByName);
         $("#sortBox").click(searchByName);
         function searchByName() {
             $.ajax({
@@ -107,7 +122,9 @@
                 url: "/Employee/GetEmp",
                 data: {
                     empName: document.getElementById("empSearch").value,
-                    sort: document.getElementById("sortBox").checked
+                    empPosition: document.getElementById("empSearchPos").value,
+                    empUsr: document.getElementById("empSearchUsr").value,
+                    sort: document.getElementById("sortBox").value
                 },
                 success: function (data) {
                     $("#tblBody").empty();
