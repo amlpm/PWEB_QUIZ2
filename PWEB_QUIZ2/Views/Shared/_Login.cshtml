@@ -4,24 +4,29 @@
     Layout = null;
 }
 
-@using(Html.BeginForm("Login", "Account",new { id = "LoginForm", ReturnUrl = Request.QueryString["ReturnUrl"] }))
+@using (Html.BeginForm("Login", "Account", new { id = "LoginForm", ReturnUrl = Request.QueryString["ReturnUrl"] }))
 {
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    
-    <div class="form-group">
-        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @tabindex = "2", @placeholder = "Enter Username", @autocomplete = "off" } })
-        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-    </div>
 
-    <div class="form-group">
-        @Html.PasswordFor(model => model.Password, new { @class = "form-control", @tabindex = "3", @placeholder = "Enter Password", @autocomplete = "off" })
-        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-    </div>
+<div class="form-group ">
+    <span class="fas fa-user-alt" aria-hidden="true" style="font-size:24px;"></span>
+    @Html.LabelFor(model => model.Username, new { @class = "control-label", style = "font-size: 18px;" })
+    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @tabindex = "2", @placeholder = "Enter Username", @autocomplete = "off" } })
+    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+</div>
 
-    <div class="form-group">
-        <button class="btn btn-success" tabindex="3" type="submit">Login</button>
-        <label style="color:white;">
-            <input type="checkbox" checked="checked" name="remember"> Remember me
-        </label>
+<div class="form-group">
+    <span class="fas fa-lock" aria-hidden="true" style="font-size:24px;"></span>
+    @Html.LabelFor(model => model.Password, new { @class = "control-label", style="font-size: 18px;" })
+    @Html.PasswordFor(model => model.Password, new { @class = "form-control", @tabindex = "3", @placeholder = "Enter Password", @autocomplete = "off" })
+    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group">
+    <div class="col text-center">
+        <button class="btn btn-success btn-lg" tabindex="3" type="submit">Login</button>
     </div>
+    <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+    <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
+</div>
 }

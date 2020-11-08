@@ -1,4 +1,17 @@
-﻿<style>
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<style>
+    body {
+        background: #f8f8f8;
+    }
+
+    display-flex, .display-flex, .display-flex-center, .signup-content, .signin-content {
+        display: flex;
+        display: -webkit-flex;
+    }
+
     .field-validation-error {
         color: #f00;
     }
@@ -12,14 +25,118 @@
         border: 2px solid #f00 !important;
         background-color: #fee !important;
     }
+
+    .signin-content {
+        border-radius: 20px;
+        padding-top: 67px;
+        padding-bottom: 87px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .signin-form, .signin-image {
+        width: 50%;
+        overflow: hidden;
+    }
+
+    .signin-form {
+        margin-right: 90px;
+        margin-left: 80px;
+    }
+
+    .signin-image {
+        margin-left: 110px;
+        margin-right: 20px;
+        margin-top: 10px;
+    }
+
+    .signup-image-link {
+        font-size: 14px;
+        color: #222;
+        display: block;
+        text-align: center;
+    }
+
+    .form-title {
+        text-align: center;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 25px;
+        overflow: hidden;
+    }
+
+        .form-group:last-child {
+            margin-bottom: 0px;
+        }
+
+    .form-button {
+        text-align: center;
+    }
+
+    #signin {
+        margin-top: 16px;
+    }
+
+    .form-submit {
+        display: inline-block;
+        background: #6dabe4;
+        color: #fff;
+        border-bottom: none;
+        width: auto;
+        padding: 15px 39px;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        margin-top: 25px;
+        cursor: pointer;
+    }
+
+        .form-submit:hover {
+            background: #4292dc;
+        }
+
+    .agree-term {
+        display: inline-block;
+        width: auto;
+    }
+
+    .label-agree-term {
+        position: relative;
+        top: 0%;
+        transform: translateY(0);
+        -moz-transform: translateY(0);
+        -webkit-transform: translateY(0);
+        -o-transform: translateY(0);
+        -ms-transform: translateY(0);
+    }
+
+    .signin-content {
+        background: white;
+        margin-top: 40px;
+        border-radius: 30px;
+        background: #fff;
+        padding-top: 67px;
+        padding-bottom: 87px;
+    }
 </style>
 
-<div class="container">
-    <div style="width:600px; background:#236;  margin:50px auto; border-radius:5px;padding:20px;">
-        @{ Html.RenderPartial("_Login"); }
-    </div>
+<section class="sign-in">
+    <div class="container">
+        <div class="signin-content">
+            <div class="signin-image">
+                <figure><img src="~/images/signin-image.jpg" alt="sing up image"></figure>
+                <a href="#" class="signup-image-link">Create an account</a>
+            </div>
 
-</div>
+            <div class="signin-form">
+                <h2 class="form-title" style="text-align:center; font-family:Patua One; font-size:50px; margin-bottom:35px;">Sign In</h2>
+                @{ Html.RenderPartial("_Login"); }
+            </div>
+        </div>
+    </div>
+</section>
+
 <div class="row">
     <div class="col-sm-5">
         <div class="form-group">
@@ -27,3 +144,8 @@
         </div>
     </div>
 </div>
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<link href="https://fonts.googleapis.com/css2?family=Patua+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alef&family=Do+Hyeon&family=Patua+One&family=Yantramanav:wght@500&display=swap" rel="stylesheet">
