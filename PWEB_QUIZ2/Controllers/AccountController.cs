@@ -146,8 +146,9 @@ namespace PWEB_QUIZ2.Controllers
             Session.Clear();
             Session.RemoveAll();
             Session.Abandon();
-
+            Session.RemoveAll(); //Removes all session variables
             FormsAuthentication.SignOut();
+
             return RedirectToAction("Login", "Account");
         }
     }
