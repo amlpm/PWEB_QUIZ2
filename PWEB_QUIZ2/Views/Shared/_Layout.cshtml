@@ -21,7 +21,6 @@
                 {
                     if (User.IsInRole("Admin"))
                     {
-                        @Html.ActionLink("Admin", "Index", "Employee", new { area = "" }, new { @class = "navbar-brand" })
                     }
                     else
                     {
@@ -35,7 +34,7 @@
                 {
                     <ul class="nav navbar-nav pull-right">
                         <li>
-                            <a href="/Account/Logout" class="navbar-brand">Logout</a>
+                            <a href="/Account/Logout" class="navbar-brand">Logout</a>Session.Abandon()
                         </li>
                     </ul>
                 }
