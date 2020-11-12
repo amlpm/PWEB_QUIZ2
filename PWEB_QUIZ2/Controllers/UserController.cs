@@ -16,7 +16,7 @@ namespace PWEB_QUIZ2.Controllers
         {
             if (Session["Username"] != null)
             {
-                var userName = Session["Username"].ToString(); ;
+                var userName = Session["Username"].ToString(); 
                 var getUserInfo = (from q in con.Employees
                                    where q.Username == userName
                                    select q).ToList();

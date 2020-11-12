@@ -103,7 +103,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Nullable="false" Type="Int32" />
           <Property Name="RoleID" Type="Int32" />
           <Property Name="Emp_Id" Type="Int32" />
           <NavigationProperty Name="Employee" Relationship="Self.fk_Employee_Id" FromRole="UserRole" ToRole="Employee" />

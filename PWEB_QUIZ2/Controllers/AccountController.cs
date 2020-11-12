@@ -19,16 +19,14 @@ namespace PWEB_QUIZ2.Controllers
         [HttpGet]
         public ActionResult Login(string ReturnUrl)
         {
-            if (User.Identity.IsAuthenticated)
-            {
+            if (User.Identity.IsAuthenticated) {
                 string userName = User.Identity.Name;
                 var info = (from e in con.Employees
                             join ur in con.UserRoles on e.Emp_ID equals ur.Emp_Id
                             join r in con.Roles on ur.RoleID equals r.Id
                             where e.Username == userName
                             select new { r.Name }).ToList();
-                if (info.Count > 0)
-                {
+                if (info.Count > 0){
                     string RoleName = info[0].Name;
                     if (RoleName == "Admin")
                     {
@@ -41,7 +39,6 @@ namespace PWEB_QUIZ2.Controllers
                     }
                 }
             }
-
             return View();
         }
 
@@ -120,6 +117,7 @@ namespace PWEB_QUIZ2.Controllers
                 con.SaveChanges();
                 int roleIdInt = Convert.ToInt32(x.Role.Id);
                 UserRole usr = new UserRole();
+                usr.Id = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
                 usr.Emp_Id = obj.Emp_ID;
                 usr.RoleID = roleIdInt;
                 con.UserRoles.Add(usr);

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -77,7 +78,7 @@ namespace PWEB_QUIZ2.Controllers
                     check.Age = model.Age;
                     check.Gender = model.Gender;
                     check.Salary = model.Salary;
-                    check.Status = model.Status;
+                    check.Status = "1";
 
                     con.Entry(check).State = EntityState.Modified;
                     con.SaveChanges();
@@ -113,6 +114,7 @@ namespace PWEB_QUIZ2.Controllers
                         con.Employees.Add(obj);
                         con.SaveChanges();
                         UserRole usr = new UserRole();
+                        usr.Id = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
                         usr.Emp_Id = obj.Emp_ID;
                         usr.RoleID = 2;
                         con.UserRoles.Add(usr);
@@ -152,14 +154,22 @@ namespace PWEB_QUIZ2.Controllers
 
         public ActionResult DeleteEmployee(int empID)
         {
+            var checkInf = (from p in con.UserRoles
+                            where p.Emp_Id == empID
+                            select p).FirstOrDefault();
             var checkInfo = (from q in con.Employees
                              where q.Emp_ID == empID
                              select q).FirstOrDefault();
-            if (checkInfo != null)
+            if (checkInf!=null)
             {
                 // Delete here
                 try
                 {
+                    //con.Employees.Remove(checkInfo);
+                    con.UserRoles.Remove(checkInf);
+                    con.SaveChanges();
+                   // con.Entry(checkInf).State = EntityState.Deleted;
+                    //con.SaveChanges();
                     con.Entry(checkInfo).State = EntityState.Deleted;
                     con.SaveChanges();
 
@@ -178,7 +188,7 @@ namespace PWEB_QUIZ2.Controllers
                 }
             }
             else
-                return Json(new { success = false, message = "Error!" },
+                return Json(new { success = true, message = "Error!" },
                    JsonRequestBehavior.AllowGet);
         }
        

@@ -11,11 +11,9 @@ namespace PWEB_QUIZ2.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class UserRole
     {
-        //[DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public Nullable<int> RoleID { get; set; }
         public Nullable<int> Emp_Id { get; set; }

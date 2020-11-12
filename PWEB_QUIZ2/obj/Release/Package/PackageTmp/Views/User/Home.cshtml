@@ -1,0 +1,173 @@
+﻿@model PWEB_QUIZ2.Models.Employee
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-primary" style="margin-top:20px;">
+    <div class="panel-heading">
+        <h3>Welcome @ViewBag.Name</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#PersonalInfo" data-toggle="tab"> Personal Info </a>
+            </li>
+            <li><a href="#EditInfo" data-toggle="tab">Edit Info</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="PersonalInfo">
+                <hr />  
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="Name">Name</label>
+                            <input type="text" name="Name" class="form-control"
+                                   value="@ViewBag.Name" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="Position">Position</label>
+                            <input type="text" name="Position" class="form-control"
+                                   value="@ViewBag.Position" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="Gender">Gender</label>
+                            <input type="text" name="Gender" class="form-control"
+                                   value="@ViewBag.Gender" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="Age">Age</label>
+                            <input type="text" name="Age" class="form-control"
+                                   value="@ViewBag.Age" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="Salary">Salary</label>
+                            <input type="text" name="Salary" class="form-control"
+                                   value="@ViewBag.Salary" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="Username">Username</label>
+                            <input type="text" name="Username" class="form-control"
+                                   value="@ViewBag.Username" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="USER_PASSWORD">Password</label>
+                            <input type="text" name="USER_PASSWORD" class="form-control"
+                                   value="@ViewBag.Password" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="Status">Status</label>
+                            @if (ViewBag.Status == "1")
+                            {
+                                <input type="text" name="USER_PASSWORD" class="form-control" value="Current" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade in" id="EditInfo">
+                <hr />
+                <form enctype="multipart/form-data" id="PersonalInfoForm">
+                    <input type="text" name="Emp_ID" value="@ViewBag.Emp_ID" hidden />
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.Name, new { id = "Name", Value = ViewBag.Name, @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Position, htmlAttributes: new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.Position, new { id = "Position", Value = ViewBag.Position, @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.Gender, new { id = "Gender", Value = ViewBag.Gender, @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Age, htmlAttributes: new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.Age, new { id = "Age", Value = ViewBag.Age, @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Salary, htmlAttributes: new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.Salary, new { id = "Salary", Value = ViewBag.Salary, @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.USER_PASSWORD, htmlAttributes: new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.USER_PASSWORD, new { id = "USER_PASSWORD", Value = ViewBag.Password, @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.USER_PASSWORD, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-6">
+                            <button id="PersonalInfoBtn" class="btn btn-success" type="button">
+                                <i class="fa fa-plus-square"></i> Update
+                            </button>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+
+        $("#PersonalInfoBtn").click(function () {
+            var oForm = document.forms["PersonalInfoForm"];
+
+            if ($("#PersonalInfoForm").valid()) {
+                var str = $("#PersonalInfoForm").serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/User/UpdateUser",
+                    data: str,
+                    success: function (data) {
+                        if (data.success) {
+                            alert(data.message);
+                            $('a[href="#home"]').tab('show');
+                            window.location.reload();
+                        } else {
+                            alert(data.message);
+                        }
+                    }
+                });
+                //return false;
+            }
+        });
+    </script>
+}

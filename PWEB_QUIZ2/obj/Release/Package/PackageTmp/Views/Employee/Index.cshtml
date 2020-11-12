@@ -1,0 +1,278 @@
+﻿@model PWEB_QUIZ2.Models.Employee
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<meta http-equiv="PRAGMA" content="NO-CACHE">
+<div class="container" style="margin-top:20px;">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 style="text-align:center;">Employee Management Database</h1>
+            <p style="margin-top:20px;">
+                <button id="AddNew" type="button" class="btn btn-success">
+                    Add New
+                </button>
+            </p>
+        </div>
+        <div class="panel-body">
+            <form>
+                <p>
+                    <input type="search" placeholder="Enter Employee Name" value="" id="empSearch" name="empSearch" style="width:400px;" />
+                    <input type="button" value="search" class="btn btn-primary" id="searchButton" />
+                    <label for="sortBox">Sort By:</label>
+                    <select name="sortBy" id="sortBox">
+                        <option value="">Select</option>
+                        <option value="Name">Name</option>
+                        <option value="Position">Position</option>
+                        <option value="Gender">Gender</option>
+                        <option value="Age">Age</option>
+                        <option value="Salary">Salary</option>
+                    </select>
+                    <br /><br />
+                    <input type="search" placeholder="Enter Position" value="" id="empSearchPos" name="empSearchPos" style="width:400px;" />
+                    <input type="button" value="search" class="btn btn-primary" id="searchPosButton" />
+                    <input type="search" placeholder="Enter Username" value="" id="empSearchUsr" name="empSearchUsr" style="width:400px;" />
+                    <input type="button" value="search" class="btn btn-primary" id="searchUsrButton" />
+                </p>
+            </form>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr class="thead-dark">
+                        <th style="text-align:center;"> @Html.DisplayNameFor(model => model.Name)</th>
+                        <th style="text-align:center;"> @Html.DisplayNameFor(model => model.Position)</th>
+                        <th style="text-align:center;"> @Html.DisplayNameFor(model => model.Gender)</th>
+                        <th style="text-align:center;"> @Html.DisplayNameFor(model => model.Age)</th>
+                        <th style="text-align:center;"> @Html.DisplayNameFor(model => model.Salary)</th>
+                        <th style="text-align:center;">Username</th>
+                        <th style="text-align:center;">Password</th>
+                        <th style="text-align:center;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tblBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="font-size:25px; text-align:center;">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.Action("AddOrEdit")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="button" value="Create" id="btnSaveEmp" class="btn btn-success  pull-left" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+        getEmployeeData();
+
+        function getEmployeeData() {
+            $.ajax({
+                type: "GET",
+                url: "/Employee/GetEmp",
+                data: {},
+                success: function (data) {
+                    $("#tblBody").empty();
+
+                    if (data.getInfoList.length > 0) {
+                        for (var i = 0; i < data.getInfoList.length; i++) {
+                            $("#tblBody").append("<tr>" +
+                                "<td>" + data.getInfoList[i].Name + "</td>" +
+                                "<td>" + data.getInfoList[i].Position + "</td>" +
+                                "<td>" + data.getInfoList[i].Gender + "</td>" +
+                                "<td>" + data.getInfoList[i].Age + "</td>" +
+                                "<td>" + data.getInfoList[i].Salary + "</td>" +
+                                "<td>" + data.getInfoList[i].Username + "</td>" +
+                                "<td>" + data.getInfoList[i].USER_PASSWORD + "</td>" +
+                                "<td>" +
+                                "<a href='#' onclick='getEmployeeById(" + data.getInfoList[i].Emp_ID + ")' class='btn btn-success'>Edit</a>" +
+                                "<a onclick='DeleteEmployee(" + data.getInfoList[i].Emp_ID + ")' href='#' class='btn btn-danger'>Delete</a>" +
+                                "</td>" +
+                                "</tr>");
+                        }
+                    }
+                },
+                error: function (er) {
+                    alert(er)
+                }
+            });
+        }
+
+        $("#searchButton").click(searchByName);
+        $("#searchPosButton").click(searchByName);
+        $("#searchUsrButton").click(searchByName);
+        $("#sortBox").click(searchByName);
+        function searchByName() {
+            $.ajax({
+                type: "GET",
+                url: "/Employee/GetEmp",
+                data: {
+                    empName: document.getElementById("empSearch").value,
+                    empPosition: document.getElementById("empSearchPos").value,
+                    empUsr: document.getElementById("empSearchUsr").value,
+                    sort: document.getElementById("sortBox").value
+                },
+                success: function (data) {
+                    $("#tblBody").empty();
+
+                    if (data.getInfoList.length > 0) {
+                        for (var i = 0; i < data.getInfoList.length; i++) {
+                            $("#tblBody").append("<tr>" +
+                                "<td>" + data.getInfoList[i].Name + "</td>" +
+                                "<td>" + data.getInfoList[i].Position + "</td>" +
+                                "<td>" + data.getInfoList[i].Gender + "</td>" +
+                                "<td>" + data.getInfoList[i].Age + "</td>" +
+                                "<td>" + data.getInfoList[i].Salary + "</td>" +
+                                "<td>" + data.getInfoList[i].Username + "</td>" +
+                                "<td>" + data.getInfoList[i].USER_PASSWORD + "</td>" +
+                                "<td>" +
+                                "<a href='#' onclick='getEmployeeById(" + data.getInfoList[i].Emp_ID + ")' class='btn btn-success'>Edit</a>" +
+                                "<a onclick='DeleteEmployee(" + data.getInfoList[i].Emp_ID + ")' href='#' class='btn btn-danger'>Delete</a>" +
+                                "</td>" +
+                                "</tr>");
+                        }
+                    }
+                },
+                error: function (er) {
+                    alert(er)
+                }
+            });
+        }
+
+        /// Function untuk Pop Up Modal Window
+
+        $("#AddNew").click(function () {
+            $("#employeeForm")[0].reset();
+            $("#Emp_ID").val(0);
+            $("#btnSaveEmp").val("Add Employee");
+            $("#btnSaveEmp").addClass("btn-success");
+            $("#btnSaveEmp").removeClass("btn-primary");
+            $(".modal-title").text("Add New Employee");
+            $("#employeeModal").modal('show');
+
+        });
+
+        /// Function untuk menyimpan data employee yang diisikan di form
+
+        $("#btnSaveEmp").click(function () {
+            var oForm = document.forms["employeeForm"];
+            console.log(oForm)
+            if ($("#employeeForm").valid()) {
+                var ajaxConfig = {
+                    type: "POST",
+                    url: oForm.action,
+                    data: new FormData(oForm),
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if (data.success == true) {
+                            console.log("mashok");
+                            if (data.Exceptions == "Exist") {
+                                $("#Username").val("").focus();
+                                alert(data.message);
+                            } else {
+                                getEmployeeData();
+                                alert(data.message);
+                                $("#employeeModal").modal('hide');
+                            }
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function (er) {
+                        alert(er);
+                    }
+                };
+
+                if ($("form").attr('enctype') == "multipart/form-data") {
+                        ajaxConfig["contentType"] = false,
+                        ajaxConfig["processData"] = false;
+                }
+                $.ajax(ajaxConfig);
+                return false;
+            }
+
+        });
+
+        /// Function untuk update data employee berdasarkan employee ID
+
+        function getEmployeeById(id) {
+            $("#employeeForm")[0].reset();
+            $.ajax({
+                type: "POST",
+                url: "/Employee/GetEmployeeById",
+                data: {
+                    empID:id
+                },
+                success: function (data) {
+
+                    $("#Emp_ID").val(data.Emp_ID);
+                    $("#Name").val(data.Name);
+                    $("#Position").val(data.Position);
+                    $("#Gender").val(data.Gender);
+                    $("#Age").val(data.Age);
+                    $("#Salary").val(data.Salary);
+                    $("#USER_PASSWORD").val(data.USER_PASSWORD);
+                    $("#Username").val(data.Username);
+
+                    $(".modal-title").text("Update Employee");
+                    $("#btnSaveEmp").val("Update Employee");
+                    $("#employeeModal").modal('show');
+                    $(".modal-header").addClass('bg-primary');
+                    $(".modal-header").removeClass('bg-success');
+
+                },
+                error: function (er) {
+                    alert(er);
+                }
+            });
+        }
+
+        /// Function untuk hapus data employee berdasarkan employee ID
+
+        function DeleteEmployee(id) {
+            var con = confirm("Are you sure you want to delete ?");
+            if (con==true) {
+                // delete here
+                $.ajax({
+                    type: "POST",
+                    url: "/Employee/DeleteEmployee",
+                    data: {
+                        empID:id
+                    },
+                    success: function (data) {
+                        if (data.success == true) {
+                            if (data.Exceptions == "Error") {
+                                alert(data.message);
+                            } else {
+                                alert(data.message);
+                                getEmployeeData();
+                            }
+                        } else
+                            window.location.reload();
+                    },
+                    error: function (er) {
+                        alert(er);
+                    }
+                });
+            }
+        }
+
+    </script>
+
+}
